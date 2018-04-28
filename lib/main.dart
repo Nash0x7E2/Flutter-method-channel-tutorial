@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:async';
 
 void main() {
   runApp(new MaterialApp(
@@ -19,9 +18,8 @@ class PlatformTestBody extends StatefulWidget {
 }
 
 class PlatformTestBodyState extends State<PlatformTestBody> {
-  static const platform =
-      const MethodChannel('com.example.flutternativetut/vibration');
-  String duration;
+  static const platformMethodChannel = const MethodChannel('com.test/test');
+  String nativeMessage = '';
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -32,7 +30,7 @@ class PlatformTestBodyState extends State<PlatformTestBody> {
           new Padding(
             padding: const EdgeInsets.only(left: 18.0, top: 200.0),
             child: new Text(
-              'Tap the button to vibrate your device',
+              'Tap the button to change your life!',
               style: new TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
@@ -42,8 +40,18 @@ class PlatformTestBodyState extends State<PlatformTestBody> {
           new Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 102.0),
             child: new RaisedButton(
-              child: new Text('Clicky for vibration'),
-              onPressed: () => _vibratePhone(),
+              child: new Text('Click Me'),
+              onPressed: () => doNativeSuff(),
+            ),
+          ),
+          new Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 102.0),
+            child: new Text(
+              nativeMessage,
+              style: new TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 23.0),
             ),
           )
         ],
@@ -51,14 +59,29 @@ class PlatformTestBodyState extends State<PlatformTestBody> {
     );
   }
 
-  Future<String> _vibratePhone() async {
-    String message;
-
+  Future<Null> doNativeSuff() async {
+    String _message;
+    // try {
+    //   final String result =
+    //       await platformMethodChannel.invokeMethod('changeLife');
+    //   _message = result;
+    //   print(result);
+    // } on PlatformException catch (e) {
+    //   _message = "Sadly I can not change your life: ${e.message}.";
+    // }
+    // setState(() {
+    //     nativeMessage = _message;
+    // });
     try {
-      message = await platform.invokeMethod('vibrateDevice');
+      final String result =
+          await platformMethodChannel.invokeMethod('vibrateDevice');
+      _message = result;
+      print(result);
     } on PlatformException catch (e) {
-      print(e);
+      _message = "Sadly I can not change your life: ${e.message}.";
     }
-    return message;
+    setState(() {
+      nativeMessage = _message;
+    });
   }
 }

@@ -9,3 +9,28 @@ build/
 ios/.generated/
 packages
 .flutter-plugins
+
+
+    new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
+            new MethodCallHandler() {
+              @Override
+              public void onMethodCall(MethodCall methodCall, Result result) {
+
+                if (methodCall.method.equals("vibrateDevice")) {
+                  String message = "Vibrating Device";
+                  Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                      vibrator.vibrate(VibrationEffect.createOneShot(2500,VibrationEffect.DEFAULT_AMPLITUDE));
+                    }
+                  }else{
+
+                    vibrator.vibrate(2500);
+                  }
+                  result.success(message);
+
+                }
+              }
+            }
+    );
