@@ -1,3 +1,3 @@
 # Flutter Method Channel 
-Code for my upcoming post on getting started with method channels in [Flutter](https://www.flutter.io). 
-Should be published sometime tomorrow over on my [Medium](https://www.medium.com/@Nash_905)
+Code for my Medium post on using Platform Channels in [Flutter](https://www.flutter.io/)
+Full article can be found here https://proandroiddev.com/flutter-using-platform-channels-e8c80b869e3d
